@@ -834,8 +834,8 @@ static __inline__ NSMutableData *_checkBody(GSWMessage *self) {
                                      allowLossyConversion:YES];
             
             [NSException raise:NSInvalidArgumentException
-                        format:@"%s: could not convert '%s' non-lossy to encoding %i",
-             __PRETTY_FUNCTION__, [lossyData bytes], _contentEncoding];
+                        format:@"%s: could not convert '%s' non-lossy to encoding %lu",
+			 __PRETTY_FUNCTION__, [lossyData bytes], (unsigned long)_contentEncoding];
         }
         
         _checkBody(self);
@@ -990,7 +990,7 @@ NSLog(@"%s - '%s' '%@'",__PRETTY_FUNCTION__, string, nsstring);
 {
   if ([replaceData length]>0) // is there something to replace ?
     {
-      NSDebugMLog(@"[_contentData length]=%d",[_contentData length]);
+      NSDebugMLog(@"[_contentData length]=%lu",(unsigned long)[_contentData length]);
       if ([_contentData length]>0)
         {
           [_contentData replaceOccurrencesOfData:replaceData

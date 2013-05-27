@@ -138,7 +138,7 @@ char* GSWIntToString(char* buffer,NSUInteger bufferSize,int value,NSUInteger* re
     value=-value;
   do
     {
-      NSCAssert2(i>0,@"Buffer not large (%d) enough for %d",bufferSize,origValue);//>0 for null term
+      NSCAssert2(i>0,@"Buffer not large (%lu) enough for %d",(unsigned long)bufferSize,origValue);//>0 for null term
       buffer[i--]='0'+(value%10);
       value=value/10;
     }
@@ -148,7 +148,7 @@ char* GSWIntToString(char* buffer,NSUInteger bufferSize,int value,NSUInteger* re
   j=0;
   if (origValue<0)
     {
-      NSCAssert2(i>0,@"Buffer not large (%d) enough for %d",bufferSize,origValue);
+      NSCAssert2(i>0,@"Buffer not large (%lu) enough for %d",(unsigned long)bufferSize,origValue);
       buffer[j++]='-';
     };
   do
@@ -1050,8 +1050,7 @@ loggedLockBeforeDateFromFunctionInFileInLine(id self,
 	  NSDebugFLLog(@"locking",
 		       @"tried lock FAILED thread %@ "
 		       @"date:%@ file:%s function:%s line:%li "
-		       @"lock:%@ "
-		       @"exception:%@ reason:%@ info:%@",
+		       @"lock:%@ ",
 		       thread, 
 		       limit, file, function, line, 
 		       volatileInternalDescription(self));
@@ -1520,8 +1519,8 @@ NSString* GSWGetDefaultDocRoot()
   NSRange range=NSMakeRange(NSNotFound,0);
   NSDebugFLog(@"self=%@",self);
   NSDebugFLog(@"aData=%@",aData);
-  NSDebugFLog(@"mask=%u",mask);
-  NSDebugFLog(@"aRange=(%u,%u)",aRange.location,aRange.length);
+  NSDebugFLog(@"mask=%lu",(unsigned long)mask);
+  NSDebugFLog(@"aRange=(%lu,%lu)",(unsigned long)aRange.location,(unsigned long)aRange.length);
   if (aData)
     {
       int aDataLength=[aData length];
@@ -1529,9 +1528,9 @@ NSString* GSWGetDefaultDocRoot()
       NSDebugFLog(@"aDataLength=%d",aDataLength);
       NSDebugFLog(@"selfLength=%d",selfLength);
       if (aRange.location+aRange.length>selfLength)
-        [NSException raise:NSInvalidArgumentException format:@"Bad Range (%d,%d) for self length %d",
-                     aRange.location,
-                     aRange.length,
+        [NSException raise:NSInvalidArgumentException format:@"Bad Range (%lu,%lu) for self length %d",
+                     (unsigned long)aRange.location,
+                     (unsigned long)aRange.length,
                      selfLength];
       else if (aDataLength>0)		
         {
@@ -1668,8 +1667,8 @@ NSString* GSWGetDefaultDocRoot()
   void* mutableBytes=NULL;
   NSUInteger length=[self length];
   NSAssert2(length>=bytesCount,
-            @"Can't delete %d first bytes from a data of length %d",
-            bytesCount,length);
+            @"Can't delete %lu first bytes from a data of length %lu",
+            (unsigned long)bytesCount,(unsigned long)length);
   mutableBytes=[self mutableBytes];
   memmove(mutableBytes,mutableBytes+bytesCount,bytesCount);
   [self setLength:length-bytesCount];
@@ -1680,8 +1679,8 @@ NSString* GSWGetDefaultDocRoot()
 {
   NSUInteger length=[self length];
   NSAssert2(length>=bytesCount,
-            @"Can't delete %d last bytes from a data of length %d",
-            bytesCount,length);
+            @"Can't delete %lu last bytes from a data of length %lu",
+            (unsigned long)bytesCount,(unsigned long)length);
   [self setLength:length-bytesCount];
 };
 @end
@@ -1969,11 +1968,11 @@ NSString* GSWGetDefaultDocRoot()
       tmpString = [tmpString initWithData:tmpData 
                              encoding:encoding];
       if (!tmpString) {
-        NSLog(@"%s NO STRING for path '%@' encoding:%d", __PRETTY_FUNCTION__, path, encoding);
+        NSLog(@"%s NO STRING for path '%@' encoding:%lu", __PRETTY_FUNCTION__, path, (unsigned long)encoding);
         
         [NSException raise:NSInvalidArgumentException 
-                     format:@"%s: could not open convert file contents '%s' non-lossy to encoding %i",
-                     __PRETTY_FUNCTION__, path, encoding];  
+                     format:@"%s: could not open convert file contents '%@' non-lossy to encoding %lu",
+                     __PRETTY_FUNCTION__, path, (unsigned long)encoding];
         
       }                               
       AUTORELEASE(tmpString);
