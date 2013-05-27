@@ -335,8 +335,8 @@ static void GSWMapMoreNodes(GSWMapTable map, unsigned required)
                    map,map->base,required,map->base->nodeSize,sizeof(GSWMapNode_t));
       */
       NSCAssert2(map->base->nodeSize>=sizeof(GSWMapNode_t),
-                 @"Bad node size: %u < %u",
-                 map->base->nodeSize,
+                 @"Bad node size: %lu < %lu",
+                 (unsigned long)map->base->nodeSize,
                  sizeof(GSWMapNode_t));
       chunkSize = chunkCount * map->base->nodeSize;
       newNodes = NSZoneMalloc(map->base->zone, chunkSize);
@@ -1007,8 +1007,8 @@ static void GSWMapBaseInitWithZoneAndCapacity(GSWMapBase base,
 +(id)dictionaryWithNodeSize:(NSUInteger)nodeSize
 {
   NSCAssert2(nodeSize>=sizeof(GSWMapNode_t),
-             @"Bad node size: %u < %u",
-             nodeSize,
+             @"Bad node size: %lu < %lu",
+             (unsigned long)nodeSize,
              sizeof(GSWMapNode_t));
   return [[self alloc]initWithNodeSize:nodeSize];
 };
@@ -1023,8 +1023,8 @@ static void GSWMapBaseInitWithZoneAndCapacity(GSWMapBase base,
 -(id)initWithNodeSize:(NSUInteger)nodeSize
 {
   NSCAssert2(nodeSize>=sizeof(GSWMapNode_t),
-             @"Bad node size: %u < %u",
-             nodeSize,
+             @"Bad node size: %lu < %lu",
+             (unsigned long)nodeSize,
              sizeof(GSWMapNode_t));
   self=[self initWithNodeSize:nodeSize
              capacity:DEFAULT_DICTIONARY_CAPACITY];
@@ -1043,8 +1043,8 @@ static void GSWMapBaseInitWithZoneAndCapacity(GSWMapBase base,
              capacity:(NSUInteger)capacity
 {
   NSCAssert2(nodeSize>=sizeof(GSWMapNode_t),
-             @"Bad node size: %u < %u",
-             nodeSize,
+             @"Bad node size: %lu < %lu",
+             (unsigned long)nodeSize,
              sizeof(GSWMapNode_t));
   if ((self=[super init]))
     {
