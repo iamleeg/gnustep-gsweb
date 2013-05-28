@@ -469,7 +469,9 @@ RCS_ID("$Id$")
                         {
                           NSDebugMLLog(@"sessions",@"self=%p sessionOrderedTimeOuts %p=%@",
                                        self,_sessionOrderedTimeOuts,_sessionOrderedTimeOuts);
+                          [ourApp lock];
                           [session terminate];	// ???
+                          [ourApp unlock];
                           NSDebugMLLog(@"sessions",@"self=%p sessionOrderedTimeOuts %p=%@",
                                        self,_sessionOrderedTimeOuts,_sessionOrderedTimeOuts);
 

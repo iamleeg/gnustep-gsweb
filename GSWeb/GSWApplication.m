@@ -1311,7 +1311,6 @@ int GSWApplicationMain(NSString* applicationClassName,
 {
   int activeSessionsCount=1;
   
-  [self lock];
   NS_DURING
     {
       [self lockedDecrementActiveSessionCount];
@@ -1322,11 +1321,9 @@ int GSWApplicationMain(NSString* applicationClassName,
       localException=ExceptionByAddingUserInfoObjectFrameInfo0(localException,
                                                                @"In lockedDecrementActiveSessionCount...");
       //TODO
-      [self unlock];
       [localException raise];
     };
   NS_ENDHANDLER;
-  [self unlock];
   if ([self isRefusingNewSessions] && activeSessionsCount<=_minimumActiveSessionsCount)
     {
       NSLog(@"Application is refusing new session and active sessions count <= minimum session count. Will terminate");
